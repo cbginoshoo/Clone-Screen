@@ -27,9 +27,10 @@
     background-color: transparent;
   }
   video {
-    /* ビデオのサイズを画面最大に設定 */
+    /* ビデオのサイズを画面最大に設定し、アスペクト比を無視 */
     width: 100%;
     height: 100%;
+    object-fit: fill; /* アスペクト比を無視して要素全体をカバー */
     position: absolute;
     top: 0;
     left: 0;
