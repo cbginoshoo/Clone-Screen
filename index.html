@@ -32,6 +32,7 @@
     height: auto;
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain; /* アスペクト比を保持して要素を収める */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -58,11 +59,11 @@
 <div class="controls">
   <div class="control-group">
     <label for="videoWidth">Width (px):</label>
-    <input type="number" id="videoWidth" min="100" placeholder="Width">
+    <input type="number" id="videoWidth" min="50" placeholder="Width">
   </div>
   <div class="control-group">
     <label for="videoHeight">Height (px):</label>
-    <input type="number" id="videoHeight" min="100" placeholder="Height">
+    <input type="number" id="videoHeight" min="50" placeholder="Height">
   </div>
 </div>
 
@@ -93,29 +94,25 @@ const videoWidthInput = document.getElementById('videoWidth');
 const videoHeightInput = document.getElementById('videoHeight');
 
 videoWidthInput.addEventListener('input', () => {
-  const width = videoWidthInput.value || window.innerWidth;
+  const width = videoWidthInput.value || Math.min(window.innerWidth, videoElement.videoWidth * 0.5);
   const height = (width / videoElement.videoWidth) * videoElement.videoHeight;
   videoElement.style.width = width + 'px';
   videoElement.style.height = height + 'px';
-  videoElement.style.left = '50%';
-  videoElement.style.top = '50%';
-  videoElement.style.transform = 'translate(-50%, -50%)';
 });
 
 videoHeightInput.addEventListener('input', () => {
-  const height = videoHeightInput.value || window.innerHeight;
+  const height = videoHeightInput.value || Math.min(window.innerHeight, videoElement.videoHeight * 0.5);
   const width = (height / videoElement.videoHeight) * videoElement.videoWidth;
   videoElement.style.height = height + 'px';
   videoElement.style.width = width + 'px';
-  videoElement.style.left = '50%';
-  videoElement.style.top = '50%';
-  videoElement.style.transform = 'translate(-50%, -50%)';
 });
 
 // 初期サイズの表示を設定
 window.addEventListener('load', () => {
-  videoWidthInput.placeholder = window.innerWidth;
-  videoHeightInput.placeholder = window.innerHeight;
+  const initialWidth = Math.min(window.innerWidth, videoElement.videoWidth * 0.5);
+  const initialHeight = (initialWidth / videoElement.videoWidth) * videoElement.videoHeight;
+  videoWidthInput.placeholder = initialWidth;
+  videoHeightInput.placeholder = initialHeight;
 });
 </script>
 </body>
