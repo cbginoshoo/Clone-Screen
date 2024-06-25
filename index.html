@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clone Screen</title>
+<title>Screen RGB Lighting</title>
 <style>
   body {
+    /* 画面全体を中央に配置し、背景色を透明に設定 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +16,9 @@
     overflow: hidden;
   }
   .video-container {
+    /* ビデオコンテナのサイズと配置を設定 */
+    width: 100vw;
+    height: 100vh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -23,12 +27,12 @@
     background-color: transparent;
   }
   video {
+    /* ビデオのサイズを画面最大に設定 */
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
   }
 </style>
 </head>
@@ -38,19 +42,23 @@
 </div>
 
 <script>
+// 画面キャプチャのオプションを設定
 const displayMediaOptions = {
   video: {
-    cursor: "never"
+    cursor: "never" // キャプチャ時にカーソルを非表示にする
   },
-  audio: false
+  audio: false // 音声のキャプチャを無効にする
 };
 
+// 画面キャプチャを取得
 navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
   .then(stream => {
+    // 取得したストリームをビデオ要素に設定
     const videoElement = document.getElementById('screen');
     videoElement.srcObject = stream;
   })
   .catch(error => {
+    // キャプチャ取得時のエラーをコンソールに表示
     console.error('Error accessing screen capture:', error);
   });
 </script>
