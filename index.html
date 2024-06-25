@@ -94,14 +94,14 @@ const videoWidthInput = document.getElementById('videoWidth');
 const videoHeightInput = document.getElementById('videoHeight');
 
 videoWidthInput.addEventListener('input', () => {
-  const width = videoWidthInput.value || Math.min(window.innerWidth, videoElement.videoWidth * 0.5);
+  const width = videoWidthInput.value || Math.min(window.innerWidth * 0.5, videoElement.videoWidth);
   const height = (width / videoElement.videoWidth) * videoElement.videoHeight;
   videoElement.style.width = width + 'px';
   videoElement.style.height = height + 'px';
 });
 
 videoHeightInput.addEventListener('input', () => {
-  const height = videoHeightInput.value || Math.min(window.innerHeight, videoElement.videoHeight * 0.5);
+  const height = videoHeightInput.value || Math.min(window.innerHeight * 0.5, videoElement.videoHeight);
   const width = (height / videoElement.videoHeight) * videoElement.videoWidth;
   videoElement.style.height = height + 'px';
   videoElement.style.width = width + 'px';
@@ -109,7 +109,7 @@ videoHeightInput.addEventListener('input', () => {
 
 // 初期サイズの表示を設定
 window.addEventListener('load', () => {
-  const initialWidth = Math.min(window.innerWidth, videoElement.videoWidth * 0.5);
+  const initialWidth = Math.min(window.innerWidth * 0.5, videoElement.videoWidth);
   const initialHeight = (initialWidth / videoElement.videoWidth) * videoElement.videoHeight;
   videoWidthInput.placeholder = initialWidth;
   videoHeightInput.placeholder = initialHeight;
