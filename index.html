@@ -32,8 +32,9 @@
     height: 100%;
     object-fit: fill; /* アスペクト比を無視して要素全体をカバー */
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .controls {
     position: absolute;
@@ -56,11 +57,11 @@
 <div class="controls">
   <div class="control-group">
     <label for="videoWidth">幅 (px):</label>
-    <input type="number" id="videoWidth" min="100" placeholder="幅">
+    <input type="number" id="videoWidth" min="100" max="1920" placeholder="幅">
   </div>
   <div class="control-group">
     <label for="videoHeight">高さ (px):</label>
-    <input type="number" id="videoHeight" min="100" placeholder="高さ">
+    <input type="number" id="videoHeight" min="100" max="1080" placeholder="高さ">
   </div>
 </div>
 
@@ -93,11 +94,15 @@ const videoHeightInput = document.getElementById('videoHeight');
 videoWidthInput.addEventListener('input', () => {
   const width = videoWidthInput.value || window.innerWidth;
   videoElement.style.width = width + 'px';
+  videoElement.style.left = '50%';
+  videoElement.style.transform = 'translate(-50%, -50%)';
 });
 
 videoHeightInput.addEventListener('input', () => {
   const height = videoHeightInput.value || window.innerHeight;
   videoElement.style.height = height + 'px';
+  videoElement.style.top = '50%';
+  videoElement.style.transform = 'translate(-50%, -50%)';
 });
 
 // 初期サイズの表示を設定
