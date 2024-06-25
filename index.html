@@ -37,9 +37,15 @@
   }
   .controls {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    bottom: 10px;
+    right: 10px;
     z-index: 10;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .control-group {
+    margin-bottom: 5px;
   }
 </style>
 </head>
@@ -48,10 +54,14 @@
   <video id="screen" autoplay oncontextmenu="return false;"></video>
 </div>
 <div class="controls">
-  <label for="videoWidth">幅:</label>
-  <input type="range" id="videoWidth" min="10" max="100" value="100">
-  <label for="videoHeight">高さ:</label>
-  <input type="range" id="videoHeight" min="10" max="100" value="100">
+  <div class="control-group">
+    <label for="videoWidth">幅 (vw):</label>
+    <input type="number" id="videoWidth" min="10" max="100" placeholder="幅">
+  </div>
+  <div class="control-group">
+    <label for="videoHeight">高さ (vh):</label>
+    <input type="number" id="videoHeight" min="10" max="100" placeholder="高さ">
+  </div>
 </div>
 
 <script>
@@ -81,11 +91,19 @@ const videoWidthInput = document.getElementById('videoWidth');
 const videoHeightInput = document.getElementById('videoHeight');
 
 videoWidthInput.addEventListener('input', () => {
-  videoElement.style.width = videoWidthInput.value + 'vw';
+  const width = videoWidthInput.value || '100';
+  videoElement.style.width = width + 'vw';
 });
 
 videoHeightInput.addEventListener('input', () => {
-  videoElement.style.height = videoHeightInput.value + 'vh';
+  const height = videoHeightInput.value || '100';
+  videoElement.style.height = height + 'vh';
+});
+
+// 初期サイズの表示を設定
+window.addEventListener('load', () => {
+  videoWidthInput.placeholder = '100';
+  videoHeightInput.placeholder = '100';
 });
 </script>
 </body>
