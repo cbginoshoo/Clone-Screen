@@ -6,7 +6,6 @@
 <title>Screen RGB Lighting</title>
 <style>
   body {
-    /* 画面全体を中央に配置し、背景色を透明に設定 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,9 +15,8 @@
     overflow: hidden;
   }
   .video-container {
-    /* ビデオコンテナのサイズと配置を設定 */
-    width: 100vw;
-    height: 100vh;
+    width: 75vw;
+    height: 75vh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -27,28 +25,14 @@
     background-color: transparent;
   }
   video {
-    /* ビデオのサイズを画面最大に設定し、アスペクト比を保持 */
     width: auto;
     height: auto;
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* アスペクト比を保持して要素を収める */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  .controls {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 5px;
-  }
-  .control-group {
-    margin-bottom: 5px;
   }
 </style>
 </head>
@@ -56,64 +40,23 @@
 <div class="video-container">
   <video id="screen" autoplay oncontextmenu="return false;"></video>
 </div>
-<div class="controls">
-  <div class="control-group">
-    <label for="videoWidth">Width (px):</label>
-    <input type="number" id="videoWidth" min="50" placeholder="Width">
-  </div>
-  <div class="control-group">
-    <label for="videoHeight">Height (px):</label>
-    <input type="number" id="videoHeight" min="50" placeholder="Height">
-  </div>
-</div>
 
 <script>
-// 画面キャプチャのオプションを設定
 const displayMediaOptions = {
   video: {
-    cursor: "never" // キャプチャ時にカーソルを非表示にする
+    cursor: "never"
   },
-  audio: false // 音声のキャプチャを無効にする
+  audio: false
 };
 
-// 画面キャプチャを取得
 navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
   .then(stream => {
-    // 取得したストリームをビデオ要素に設定
     const videoElement = document.getElementById('screen');
     videoElement.srcObject = stream;
   })
   .catch(error => {
-    // キャプチャ取得時のエラーをコンソールに表示
     console.error('Error accessing screen capture:', error);
   });
-
-// ビデオサイズの変更を処理
-const videoElement = document.getElementById('screen');
-const videoWidthInput = document.getElementById('videoWidth');
-const videoHeightInput = document.getElementById('videoHeight');
-
-videoWidthInput.addEventListener('input', () => {
-  const width = videoWidthInput.value || Math.min(window.innerWidth * 0.5, videoElement.videoWidth);
-  const height = (width / videoElement.videoWidth) * videoElement.videoHeight;
-  videoElement.style.width = width + 'px';
-  videoElement.style.height = height + 'px';
-});
-
-videoHeightInput.addEventListener('input', () => {
-  const height = videoHeightInput.value || Math.min(window.innerHeight * 0.5, videoElement.videoHeight);
-  const width = (height / videoElement.videoHeight) * videoElement.videoWidth;
-  videoElement.style.height = height + 'px';
-  videoElement.style.width = width + 'px';
-});
-
-// 初期サイズの表示を設定
-window.addEventListener('load', () => {
-  const initialWidth = Math.min(window.innerWidth * 0.5, videoElement.videoWidth);
-  const initialHeight = (initialWidth / videoElement.videoWidth) * videoElement.videoHeight;
-  videoWidthInput.placeholder = initialWidth;
-  videoHeightInput.placeholder = initialHeight;
-});
 </script>
 </body>
 </html>
