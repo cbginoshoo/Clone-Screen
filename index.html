@@ -35,11 +35,23 @@
     top: 0;
     left: 0;
   }
+  .controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+  }
 </style>
 </head>
 <body>
 <div class="video-container">
   <video id="screen" autoplay oncontextmenu="return false;"></video>
+</div>
+<div class="controls">
+  <label for="videoWidth">幅:</label>
+  <input type="range" id="videoWidth" min="10" max="100" value="100">
+  <label for="videoHeight">高さ:</label>
+  <input type="range" id="videoHeight" min="10" max="100" value="100">
 </div>
 
 <script>
@@ -62,6 +74,19 @@ navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
     // キャプチャ取得時のエラーをコンソールに表示
     console.error('Error accessing screen capture:', error);
   });
+
+// ビデオサイズの変更を処理
+const videoElement = document.getElementById('screen');
+const videoWidthInput = document.getElementById('videoWidth');
+const videoHeightInput = document.getElementById('videoHeight');
+
+videoWidthInput.addEventListener('input', () => {
+  videoElement.style.width = videoWidthInput.value + 'vw';
+});
+
+videoHeightInput.addEventListener('input', () => {
+  videoElement.style.height = videoHeightInput.value + 'vh';
+});
 </script>
 </body>
 </html>
