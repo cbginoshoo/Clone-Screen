@@ -55,12 +55,12 @@
 </div>
 <div class="controls">
   <div class="control-group">
-    <label for="videoWidth">幅 (vw):</label>
-    <input type="number" id="videoWidth" min="10" max="100" placeholder="幅">
+    <label for="videoWidth">幅 (px):</label>
+    <input type="number" id="videoWidth" min="100" placeholder="幅">
   </div>
   <div class="control-group">
-    <label for="videoHeight">高さ (vh):</label>
-    <input type="number" id="videoHeight" min="10" max="100" placeholder="高さ">
+    <label for="videoHeight">高さ (px):</label>
+    <input type="number" id="videoHeight" min="100" placeholder="高さ">
   </div>
 </div>
 
@@ -91,19 +91,19 @@ const videoWidthInput = document.getElementById('videoWidth');
 const videoHeightInput = document.getElementById('videoHeight');
 
 videoWidthInput.addEventListener('input', () => {
-  const width = videoWidthInput.value || '100';
-  videoElement.style.width = width + 'vw';
+  const width = videoWidthInput.value || window.innerWidth;
+  videoElement.style.width = width + 'px';
 });
 
 videoHeightInput.addEventListener('input', () => {
-  const height = videoHeightInput.value || '100';
-  videoElement.style.height = height + 'vh';
+  const height = videoHeightInput.value || window.innerHeight;
+  videoElement.style.height = height + 'px';
 });
 
 // 初期サイズの表示を設定
 window.addEventListener('load', () => {
-  videoWidthInput.placeholder = '100';
-  videoHeightInput.placeholder = '100';
+  videoWidthInput.placeholder = window.innerWidth;
+  videoHeightInput.placeholder = window.innerHeight;
 });
 </script>
 </body>
